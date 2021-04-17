@@ -46,7 +46,7 @@ def correlation(fir_timeSerie, sec_timeSerie, time, lag, window):
     sum=0
     for i, j in zip(new_fir, new_sec):
         sum+=(i-mean_f)*(j-mean_s)
-    sum=sum/(window-1)
+    sum=sum/(lag-1)
     if(stdev_f*stdev_s):
         correlation=sum/(stdev_f*stdev_s)
     else:
@@ -73,6 +73,7 @@ def aggregated_correlation(fir_timeSerie, sec_timeSerie, time, window):
     for i, j in zip(c_pos, c_neg):
         pos_sum+=max(i,0)/((window//2)+1)
         neg_sum+=max(j,0)/(window//2)
+        
     if(pos_sum>=neg_sum): #sec lead fir
         aggregate_cor=pos_sum
         return [aggregate_cor,sec_timeSerie[0]['catid'],fir_timeSerie[0]['catid']]
